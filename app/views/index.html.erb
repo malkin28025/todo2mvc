@@ -35,21 +35,21 @@
 			<!-- This footer should hidden by default and shown when there are todos -->
 			<footer id="footer">
 				<!-- This should be `0 items left` by default -->
-		<span id="todo-count"><strong><%= @All_todo_items %></strong> item left</span>
+		<li> id="todo-count"><strong><%= @all_todo_items.where (complete :false.count, 'item' change index) %></strong> item left</li>
 				<!-- Remove this if you don't implement routing -->
 				<ul id="filters">
-					<li>
-						<a class="selected" href="#/">All</a>
-					</li>
-					<li>
-						<a href="#/active">Active</a>
-					</li>
-					<li>
-						<a href="#/completed">Completed</a>
-					</li>
-				</ul>
-				<!-- Hidden if no completed items are left ↓ -->
-				<button id="clear-completed"></button>
+						<li>
+							<%= link_to 'All', root_path, class: ('selected' if params[:complete].nil?) %>
+						</li>
+						<li>
+							<%= link_to 'Active', root_path(complete: false), class: ('selected' if params[:complete] == 'false') %>
+						</li>
+						<li>
+							<%= link_to 'Completed', root_path(complete: true), class: ('selected' if params[:complete] == 'true') %>
+						</li>
+					</ul>
+					<% unless @all_todo_items.where (complete :true).count == 0%>
+				<button id="clear-completed"></button> Hidden if no completed items are left. 
 			</footer>
 		</section>
 		<footer id="info">
